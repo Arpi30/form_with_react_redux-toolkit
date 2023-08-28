@@ -6,6 +6,7 @@ const formSlice = createSlice({
   initialState: {
     userName: "",
     password: "",
+    valueLength: false,
   },
   reducers: {
     updateUsername(state, action) {
