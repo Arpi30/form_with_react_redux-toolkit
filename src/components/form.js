@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { formActions } from "../store/form-slice";
 
-let validation = false;
-
 export const Form = () => {
   const dispatch = useDispatch(); // You can use the reducer action with the dispatch functions
   const userName = useSelector((state) => state.form.userName); // select the redux initialState property
   const password = useSelector((state) => state.form.password);
+  let validation = false;
 
   const handleUsernameChange = (e) => {
     dispatch(formActions.updateUsername(e.target.value)); // update the initialState with the Handlerfunction
