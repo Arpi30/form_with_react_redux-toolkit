@@ -6,7 +6,10 @@ const formSlice = createSlice({
   initialState: {
     userName: "",
     password: "",
-    valueLength: false,
+    isValid: {
+      userName: true,
+      password: true,
+    },
   },
   reducers: {
     updateUsername(state, action) {
@@ -19,6 +22,15 @@ const formSlice = createSlice({
       // clear the input fields
       state.userName = "";
       state.password = "";
+    },
+    updateIsValid(state, action) {
+      return {
+        ...state,
+        isValid: {
+          ...state.isValid,
+          ...action.payload,
+        },
+      };
     },
   },
 });

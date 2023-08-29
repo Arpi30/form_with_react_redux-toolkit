@@ -5,28 +5,37 @@ export const Form = () => {
   const dispatch = useDispatch(); // You can use the reducer action with the dispatch functions
   const userName = useSelector((state) => state.form.userName); // select the redux initialState property
   const password = useSelector((state) => state.form.password);
-  let validation = false;
+  const isValid = useSelector((state) => state.form.isValid);
 
   const handleUsernameChange = (e) => {
-    dispatch(formActions.updateUsername(e.target.value)); // update the initialState with the Handlerfunction
+    dispatch(formActions.updateUsername(e.target.value));
+    if (e.target.value.length <= 3) {
+      dispatch(formActions.updateIsValid({ userName: false }));
+    } else {
+      dispatch(formActions.updateIsValid({ userName: true }));
+    }
   };
 
   const handlePasswordChange = (e) => {
     dispatch(formActions.updatePassword(e.target.value));
+    if (e.target.value.length < 5) {
+      dispatch(formActions.updateIsValid({ password: false }));
+    } else {
+      dispatch(formActions.updateIsValid({ password: true }));
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (userName.length <= 3 || password.length < 5) {
-      validation = true;
-      alert("Username or password is to short");
+    if (!isValid.userName || !isValid.password) {
+      alert("Invalid username or password length");
       dispatch(formActions.clearInputField());
       return;
     }
     alert(`username: ${userName}, password: ${password}`);
     dispatch(formActions.clearInputField());
   };
-
+  console.log(isValid);
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
@@ -34,8 +43,8 @@ export const Form = () => {
           <label htmlFor="id" className="form-label">
             UserName
           </label>
-          {validation && (
-            <span className="text-danger">Incorrect value length</span>
+          {!isValid.userName && (
+            <span className="text-danger">Incorrect username length</span>
           )}
         </div>
         <input
@@ -52,8 +61,8 @@ export const Form = () => {
           <label htmlFor="pass" className="form-label">
             Password
           </label>
-          {validation && (
-            <span className="text-danger">Incorrect value length</span>
+          {!isValid.password && (
+            <span className="text-danger">Incorrect password length</span>
           )}
         </div>
         <input
