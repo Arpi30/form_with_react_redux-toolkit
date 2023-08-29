@@ -10,6 +10,7 @@ export const Form = () => {
   const handleUsernameChange = (e) => {
     dispatch(formActions.updateUsername(e.target.value));
     if (e.target.value.length <= 3) {
+      // input validation with reducers
       dispatch(formActions.updateIsValid({ userName: false }));
     } else {
       dispatch(formActions.updateIsValid({ userName: true }));
@@ -19,6 +20,7 @@ export const Form = () => {
   const handlePasswordChange = (e) => {
     dispatch(formActions.updatePassword(e.target.value));
     if (e.target.value.length < 5) {
+      // input validation with reducers
       dispatch(formActions.updateIsValid({ password: false }));
     } else {
       dispatch(formActions.updateIsValid({ password: true }));
@@ -27,6 +29,7 @@ export const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // return from submit while the input fields have incorrect length
     if (!isValid.userName || !isValid.password) {
       alert("Invalid username or password length");
       dispatch(formActions.clearInputField());
@@ -43,7 +46,8 @@ export const Form = () => {
           <label htmlFor="id" className="form-label">
             UserName
           </label>
-          {!isValid.userName && (
+
+          {!isValid.userName && ( // set the warning
             <span className="text-danger">Incorrect username length</span>
           )}
         </div>
@@ -61,7 +65,7 @@ export const Form = () => {
           <label htmlFor="pass" className="form-label">
             Password
           </label>
-          {!isValid.password && (
+          {!isValid.password && ( // set the warning
             <span className="text-danger">Incorrect password length</span>
           )}
         </div>

@@ -24,9 +24,11 @@ const formSlice = createSlice({
       state.password = "";
     },
     updateIsValid(state, action) {
+      // create a validation reducer
       return {
         ...state,
         isValid: {
+          // keep the state and add an action as payload
           ...state.isValid,
           ...action.payload,
         },
